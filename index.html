@@ -25,7 +25,7 @@
   --shadow-lg:0 24px 60px rgba(0,0,0,.22);
 
   /* Barras */
-  --topbar-h:0px;     /* topbar removida */
+  --topbar-h:0px;
   --header-h:64px; --sticky-h:72px;
 
   /* Tipo */
@@ -70,9 +70,16 @@ img{max-width:100%; height:auto; display:block}
   background:linear-gradient(135deg,#7a0009,#b10012);
   border:1px solid rgba(255,255,255,.18);
   box-shadow:0 14px 30px rgba(0,0,0,.35), 0 0 0 6px rgba(255,193,7,.18);
+  position:relative; isolation:isolate;
 }
-.btn-contrast:hover{transform:translateY(-2px); filter:brightness(1.03)}
-.btn-contrast:focus-visible{outline:3px solid #ffd95f; outline-offset:3px}
+.btn-contrast::after{
+  content:""; position:absolute; inset:-2px; border-radius:999px;
+  background:radial-gradient(80% 80% at 50% 0%, rgba(255,217,95,.35), transparent 60%);
+  z-index:-1; filter:blur(6px);
+}
+@keyframes pulseCTA{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-1px) scale(1.01)}}
+.btn-contrast:hover{filter:brightness(1.05)}
+.btn-contrast.is-pulse{animation:pulseCTA 2.8s infinite ease-in-out}
 
 .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .9rem;border-radius:999px;
   background:rgba(255,193,7,.16); color:var(--white); border:1px solid rgba(255,193,7,.35); font-weight:700}
@@ -91,29 +98,30 @@ img{max-width:100%; height:auto; display:block}
 
 /* Header */
 .header{
-  position:sticky; top:0; z-index:55; height:var(--header-h);
-  display:flex; align-items:center; background:rgba(0,0,0,.25); backdrop-filter:saturate(150%) blur(6px);
+  position:sticky; top:0; z-index:70; height:var(--header-h);
+  display:flex; align-items:center; background:rgba(0,0,0,.28); backdrop-filter:saturate(150%) blur(8px);
   border-bottom:1px solid rgba(255,217,95,.18); overflow:hidden;
+  box-shadow:0 6px 22px rgba(0,0,0,.22);
 }
 .header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px; min-width:0}
 .brand{font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
-  font-size:clamp(16px,2.6vw,18px); white-space:nowrap}
+  font-size:clamp(16px,2.6vw,18px); white-space:nowrap; text-shadow:0 0 12px rgba(255,217,95,.35)}
 .nav{display:none; gap:22px}
 .nav a{color:rgba(255,255,255,.86);font-weight:700}
 .nav a:hover,.nav a:focus-visible{color:var(--gold)}
 @media (min-width:920px){ .nav{display:flex} }
-/* menu 100% oculto no mobile */
-@media (max-width:919.98px){
-  .nav{display:none!important; visibility:hidden!important; position:absolute!important; left:-9999px!important; width:0!important; height:0!important; overflow:hidden!important}
-  #headerCta{display:none!important}
-}
+@media (max-width:919.98px){ #headerCta{display:none!important} }
 
 /* Hero */
 .hero{position:relative; padding:clamp(40px,8vw,80px) 0; overflow:hidden}
 .hero__grid{grid-template-columns:1fr}
 .hero h1{font-size:var(--h1);line-height:1.05;margin:.2rem 0 .8rem;max-width:18ch}
 .hero p{color:rgba(255,255,255,.9); max-width:46ch}
-.hero__img{border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-lg); background:rgba(0,0,0,.15)}
+.hero__img{border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-lg); background:rgba(0,0,0,.15); position:relative}
+.hero__img::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(60% 40% at 50% 10%, rgba(255,217,95,.12), transparent 60%);
+}
 .hero__img img{aspect-ratio:4/3; object-fit:cover}
 .cta-row{display:grid; gap:12px; max-width:520px; margin-top:14px}
 .note{display:flex;align-items:center;gap:.6rem;font-weight:700;color:rgba(255,255,255,.9)}
@@ -156,13 +164,45 @@ h2{font-size:var(--h2); line-height:1.15; margin:0 0 12px}
 .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:16px}
 .gallery img{height:220px; object-fit:cover; border-radius:14px; box-shadow:0 22px 46px rgba(0,0,0,.4)}
 
-/* Social proof */
-.proof .badges{display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 24px}
+/* Social proof (melhorado) */
+.proof h2{margin-bottom:8px}
+.testi-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
+.testi{
+  background:#fff; color:#111; border-radius:18px; padding:18px;
+  border:1px solid #ffe082; box-shadow:0 18px 40px rgba(0,0,0,.08);
+}
+.t-head{display:flex; align-items:center; gap:12px}
+.avatar{
+  width:56px; height:56px; border-radius:50%; overflow:hidden; flex:0 0 56px;
+  border:2px solid transparent;
+  background:
+    linear-gradient(#fff,#fff) padding-box,
+    linear-gradient(130deg,#ffd95f,#b10012) border-box;
+  box-shadow:0 6px 14px rgba(177,0,18,.18);
+}
+.t-name{font-weight:800}
+.t-role{opacity:.65; font-weight:700; font-size:.92rem}
+.t-verified{
+  display:inline-flex; align-items:center; gap:6px; font-size:.86rem;
+  color:#0f6a27; font-weight:800; background:#e9f7ef; padding:.14rem .5rem; border-radius:999px;
+}
+.t-verified::before{content:"✔"; font-weight:900}
+.stars{color:#ffb300; letter-spacing:1px; font-size:1rem}
+.t-body{margin:.7rem 0 0; font-weight:700; color:#222}
 
 /* Oferta */
 .offer{background:linear-gradient(160deg, rgba(177,0,18,.92), rgba(90,0,7,.96))}
-.offer-card{background:linear-gradient(160deg,var(--gold-700),var(--gold)); color:#000; text-align:center;
-  border-radius:24px; padding:clamp(22px,5vw,36px); box-shadow:var(--shadow-lg); border:1px solid rgba(0,0,0,.08)}
+.offer-card{
+  background:linear-gradient(160deg,var(--gold-700),var(--gold));
+  color:#000; text-align:center; border-radius:24px;
+  padding:clamp(22px,5vw,36px); box-shadow:var(--shadow-lg); border:1px solid rgba(0,0,0,.08);
+  position:relative; overflow:hidden;
+}
+.offer-card::after{
+  content:""; position:absolute; inset:-30% -10% auto -10%; height:120px;
+  background:radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.35), transparent 70%);
+  filter:blur(18px); pointer-events:none;
+}
 .offer-card p{max-width:48ch; margin:0 auto 18px; font-weight:700}
 
 /* FAQ */
@@ -178,7 +218,7 @@ details p{margin:.6rem 0 0; color:#333}
 .footer .brand{letter-spacing:.18em}
 
 /* Sticky CTA */
-.sticky{position:sticky; bottom:0; inset-inline:0; z-index:70;
+.sticky{position:sticky; bottom:0; inset-inline:0; z-index:65;
   display:flex; justify-content:center; align-items:center;
   min-height:var(--sticky-h); padding:.6rem;
   background:rgba(0,0,0,.35); backdrop-filter:blur(8px) saturate(140%);
@@ -186,17 +226,75 @@ details p{margin:.6rem 0 0; color:#333}
 .sticky > a{width:min(92%,420px); box-shadow:0 18px 44px rgba(0,0,0,.38)}
 .sticky.is-visible{transform:translateY(0); opacity:1; pointer-events:auto}
 
-/* Ancoragem segura (apenas header) */
+/* Ancoragem segura */
 .hero,.section,.marquee{scroll-margin-top:calc(var(--header-h) + 16px)}
 
-/* Movimento reduzido */
+/* ======= Decoração de Natal ======= */
+/* Luzinhas fixas no topo */
+.lights{
+  position:fixed; top:0; left:0; right:0; height:26px; z-index:80; pointer-events:none;
+  background:
+    radial-gradient(6px 12px at 5% 60%, #ff5252 65%, transparent 70%),
+    radial-gradient(6px 12px at 15% 60%, #ffd95f 65%, transparent 70%),
+    radial-gradient(6px 12px at 25% 60%, #17c964 65%, transparent 70%),
+    radial-gradient(6px 12px at 35% 60%, #18a0fb 65%, transparent 70%),
+    radial-gradient(6px 12px at 45% 60%, #ff5252 65%, transparent 70%),
+    radial-gradient(6px 12px at 55% 60%, #ffd95f 65%, transparent 70%),
+    radial-gradient(6px 12px at 65% 60%, #17c964 65%, transparent 70%),
+    radial-gradient(6px 12px at 75% 60%, #18a0fb 65%, transparent 70%),
+    radial-gradient(6px 12px at 85% 60%, #ff5252 65%, transparent 70%),
+    radial-gradient(6px 12px at 95% 60%, #ffd95f 65%, transparent 70%);
+  opacity:.85; filter:drop-shadow(0 0 6px rgba(255,255,255,.45));
+  animation:twinkle 2.4s infinite ease-in-out alternate;
+}
+@keyframes twinkle{0%{opacity:.5}100%{opacity:.95}}
+
+/* Guirlandas nos cantos */
+.corner{
+  position:fixed; width:140px; aspect-ratio:1; z-index:60; pointer-events:none; opacity:.9;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,.35));
+}
+.corner svg{width:100%; height:100%}
+.corner.left{top:18px; left:-6px; transform:rotate(-12deg)}
+.corner.right{top:18px; right:-6px; transform:scaleX(-1) rotate(-12deg)}
+
+/* Canvas de neve ocupa tela toda atrás do conteúdo */
+#snowCanvas{
+  position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.9;
+}
+
+/* Movimento reduzido = sem neve/luzes animadas */
 @media (prefers-reduced-motion:reduce){
-  *{scroll-behavior:auto !important; transition:none !important; animation:none !important}
+  .lights{animation:none}
+  #snowCanvas{display:none}
 }
 </style>
 </head>
 <body>
 <a class="visually-hidden" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- Decorações -->
+<div class="lights" aria-hidden="true"></div>
+<canvas id="snowCanvas" aria-hidden="true"></canvas>
+<div class="corner left" aria-hidden="true">
+  <!-- guirlanda SVG -->
+  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="g" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#17c964"/><stop offset="1" stop-color="#0a5d32"/></radialGradient></defs>
+    <circle cx="60" cy="60" r="46" fill="url(#g)" />
+    <circle cx="40" cy="28" r="6" fill="#ffd95f"/><circle cx="80" cy="32" r="6" fill="#ff5252"/>
+    <circle cx="95" cy="62" r="6" fill="#18a0fb"/><circle cx="30" cy="84" r="6" fill="#ffd95f"/>
+    <circle cx="70" cy="92" r="6" fill="#ff5252"/><circle cx="26" cy="54" r="6" fill="#18a0fb"/>
+  </svg>
+</div>
+<div class="corner right" aria-hidden="true">
+  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="g2" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#17c964"/><stop offset="1" stop-color="#0a5d32"/></radialGradient></defs>
+    <circle cx="60" cy="60" r="46" fill="url(#g2)" />
+    <circle cx="40" cy="28" r="6" fill="#ffd95f"/><circle cx="80" cy="32" r="6" fill="#ff5252"/>
+    <circle cx="95" cy="62" r="6" fill="#18a0fb"/><circle cx="30" cy="84" r="6" fill="#ffd95f"/>
+    <circle cx="70" cy="92" r="6" fill="#ff5252"/><circle cx="26" cy="54" r="6" fill="#18a0fb"/>
+  </svg>
+</div>
 
 <!-- Header -->
 <header class="header" role="banner">
@@ -226,7 +324,8 @@ details p{margin:.6rem 0 0; color:#333}
         <p>Receita validada, produção simples e posicionamento que vende. Comece hoje pelo investimento único de <strong>R$ 29,90</strong>.</p>
 
         <div class="cta-row">
-          <a href="#checkout" class="btn btn-contrast btn-lg" id="heroCta">Quero lucrar agora</a>
+          <a href="#checkout" class="btn btn-contrast btn-lg is-pulse" id="heroCta">Quero lucrar agora</a>
+          <!-- removido o 'ver como funciona' para foco total no CTA -->
           <div class="note"><span class="dot"></span> Acesso vitalício + garantia de 7 dias</div>
         </div>
       </div>
@@ -266,7 +365,7 @@ details p{margin:.6rem 0 0; color:#333}
           <li><span class="tick" aria-hidden="true"></span>Passo a passo prático (fácil de seguir)</li>
           <li><span class="tick" aria-hidden="true"></span>Bônus para te ajudar a vender e fidelizar</li>
         </ul>
-        <p><a class="btn btn-ghost" href="#checkout">Começar agora</a></p>
+        <p><a class="btn btn-primary" href="#checkout">Começar agora</a></p>
       </div>
     </div>
   </section>
@@ -306,7 +405,7 @@ details p{margin:.6rem 0 0; color:#333}
     </div>
   </section>
 
-  <!-- Provas -->
+  <!-- Provas (refeito) -->
   <section class="section section--light proof" id="provas">
     <div class="container">
       <h2>Resultados reais de quem usa o Panetoon</h2>
@@ -316,32 +415,44 @@ details p{margin:.6rem 0 0; color:#333}
         <span class="badge">Suporte direto</span>
       </div>
 
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
-        <article class="card" style="background:#fff;color:#000;border-color:#ffe082">
-          <header style="display:flex;gap:12px;align-items:center">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=60&auto=format&fit=crop&w=120"
-                 alt="Carla Fernandes" width="54" height="54" style="border-radius:50%;object-fit:cover;border:2px solid #ffd95f">
-            <div><strong>Carla Fernandes</strong><div style="opacity:.7">Ex-gerente administrativa</div></div>
+      <div class="testi-grid">
+        <article class="testi">
+          <header class="t-head">
+            <div class="avatar"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=60&auto=format&fit=crop&w=120" alt="Carla Fernandes" width="56" height="56"></div>
+            <div>
+              <div class="t-name">Carla Fernandes</div>
+              <div class="t-role">Ex-gerente administrativa</div>
+              <div class="stars" aria-label="avaliação 5 de 5">★★★★★</div>
+            </div>
+            <span class="t-verified">Verificado</span>
           </header>
-          <p style="margin:.8rem 0 0">Em três semanas vendi <strong style="color:#b10012">R$ 7.800</strong> e já tenho fila para dezembro inteiro.</p>
+          <p class="t-body">“Comecei com 10 unidades pra testar. Em 3 semanas bati <strong style="color:#b10012">R$ 7.800</strong> e já tenho lista de espera pro mês todo.”</p>
         </article>
 
-        <article class="card" style="background:#fff;color:#000;border-color:#ffe082">
-          <header style="display:flex;gap:12px;align-items:center">
-            <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=60&auto=format&fit=crop&w=120"
-                 alt="Marcos Lima" width="54" height="54" style="border-radius:50%;object-fit:cover;border:2px solid #ffd95f">
-            <div><strong>Marcos Lima</strong><div style="opacity:.7">Ex-vendedor varejista</div></div>
+        <article class="testi">
+          <header class="t-head">
+            <div class="avatar"><img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=60&auto=format&fit=crop&w=120" alt="Marcos Lima" width="56" height="56"></div>
+            <div>
+              <div class="t-name">Marcos Lima</div>
+              <div class="t-role">Ex-vendedor varejista</div>
+              <div class="stars" aria-label="avaliação 5 de 5">★★★★★</div>
+            </div>
+            <span class="t-verified">Verificado</span>
           </header>
-          <p style="margin:.8rem 0 0">Fechei <strong style="color:#b10012">34 encomendas</strong> e recuperei o investimento em um dia.</p>
+          <p class="t-body">“Fechei <strong style="color:#b10012">34 encomendas</strong> no primeiro fim de semana. O método é direto e dá segurança.”</p>
         </article>
 
-        <article class="card" style="background:#fff;color:#000;border-color:#ffe082">
-          <header style="display:flex;gap:12px;align-items:center">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=60&auto=format&fit=crop&w=120"
-                 alt="Juliana Prado" width="54" height="54" style="border-radius:50%;object-fit:cover;border:2px solid #ffd95f">
-            <div><strong>Juliana Prado</strong><div style="opacity:.7">Empreendedora de eventos</div></div>
+        <article class="testi">
+          <header class="t-head">
+            <div class="avatar"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=60&auto=format&fit=crop&w=120" alt="Juliana Prado" width="56" height="56"></div>
+            <div>
+              <div class="t-name">Juliana Prado</div>
+              <div class="t-role">Eventos & doces finos</div>
+              <div class="stars" aria-label="avaliação 5 de 5">★★★★★</div>
+            </div>
+            <span class="t-verified">Verificado</span>
           </header>
-          <p style="margin:.8rem 0 0">Transformei minha cozinha em produção express e alcancei <strong style="color:#b10012">lucro de 62%</strong> por unidade.</p>
+          <p class="t-body">“Padronizei produção e subi preço. Margem média de <strong style="color:#b10012">62%</strong> por unidade, sem estresse.”</p>
         </article>
       </div>
     </div>
@@ -391,8 +502,8 @@ details p{margin:.6rem 0 0; color:#333}
   </div>
 </footer>
 
+<!-- Marquee duplicada só no mobile -->
 <script>
-/* Marquee duplicada só no mobile, sem estourar largura */
 (() => {
   const track = document.getElementById('marqueeTrack');
   if(!track) return;
@@ -413,8 +524,8 @@ details p{margin:.6rem 0 0; color:#333}
 </script>
 <style>@keyframes mar{to{transform:translateX(-50%)}}</style>
 
+<!-- Sticky CTA + Header CTA -->
 <script>
-/* Sticky CTA + Header CTA (sem piscadas e estável em resize) */
 (() => {
   const heroCta = document.getElementById('heroCta');
   const sticky = document.getElementById('stickyCta');
@@ -444,76 +555,47 @@ details p{margin:.6rem 0 0; color:#333}
 })();
 </script>
 
-<!-- EFEITO DE NEVE E DECORAÇÃO DE NATAL -->
-<style>
-/* ❄️ Flocos de neve animados */
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: #fff;
-  font-size: 1em;
-  pointer-events: none;
-  z-index: 9999;
-  animation: fall linear forwards;
-  opacity: 0.9;
-  text-shadow: 0 0 6px rgba(255,255,255,0.6);
-}
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
-
-/* 🎄 Luzes de Natal no topo */
-.xmas-lights {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  pointer-events: none;
-  z-index: 9998;
-  padding: 4px 0;
-}
-.xmas-lights span {
-  width: 10px;
-  height: 20px;
-  border-radius: 50%;
-  background: red;
-  animation: blink 1.4s infinite alternate;
-  box-shadow: 0 0 12px currentColor;
-}
-.xmas-lights span:nth-child(2n){background: gold;}
-.xmas-lights span:nth-child(3n){background: green;}
-.xmas-lights span:nth-child(4n){background: #00b3ff;}
-@keyframes blink {
-  0%, 80% { opacity: .3; filter: brightness(0.6); }
-  100% { opacity: 1; filter: brightness(1.6); }
-}
-</style>
-
-<div class="xmas-lights" aria-hidden="true">
-  <span></span><span></span><span></span><span></span>
-  <span></span><span></span><span></span><span></span>
-  <span></span><span></span><span></span><span></span>
-</div>
-
+<!-- ❄️ Neve performática (canvas) -->
 <script>
-/* ❄️ Gerador de flocos de neve */
-(function snowEffect(){
-  const snowContainer = document.createElement("div");
-  document.body.appendChild(snowContainer);
-  const createSnow = () => {
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
-    snowflake.innerHTML = "❄";
-    snowflake.style.left = Math.random() * 100 + "vw";
-    snowflake.style.fontSize = Math.random() * 18 + 8 + "px";
-    snowflake.style.animationDuration = (Math.random() * 3 + 3) + "s";
-    snowContainer.appendChild(snowflake);
-    setTimeout(() => snowflake.remove(), 6000);
-  };
-  setInterval(createSnow, 150);
+(() => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+  const c = document.getElementById('snowCanvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W = c.width = window.innerWidth, H = c.height = window.innerHeight;
+  let flakes = [];
+  const MAX = Math.min(140, Math.floor(W * H / 28000));
+
+  function makeFlake(){
+    return {
+      x: Math.random()*W,
+      y: -10 - Math.random()*H,
+      r: 1.2 + Math.random()*2.6,
+      s: 0.6 + Math.random()*1.4,
+      a: Math.random()*Math.PI*2
+    };
+  }
+  for(let i=0;i<MAX;i++) flakes.push(makeFlake());
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = 'rgba(255,255,255,.95)';
+    for (const f of flakes){
+      f.y += f.s;
+      f.x += Math.sin(f.a += 0.01)*0.6;
+      if (f.y > H+10) { f.x = Math.random()*W; f.y = -10; }
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+  addEventListener('resize', ()=>{
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+  }, {passive:true});
 })();
 </script>
 
