@@ -249,23 +249,43 @@ details p{margin:.6rem 0 0; color:#333}
 }
 @keyframes twinkle{0%{opacity:.5}100%{opacity:.95}}
 
-/* Guirlandas nos cantos */
-.corner{
-  position:fixed; width:140px; aspect-ratio:1; z-index:60; pointer-events:none; opacity:.9;
-  filter:drop-shadow(0 10px 20px rgba(0,0,0,.35));
+/* Faixa de bengala natalina (fina, sem poluir) */
+.candy{
+  position:fixed; top:26px; left:0; right:0; height:8px; z-index:79; pointer-events:none;
+  background:
+    repeating-linear-gradient(45deg,#ffffff 0 10px,#b10012 10px 20px);
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+  opacity:.9;
 }
-.corner svg{width:100%; height:100%}
-.corner.left{top:18px; left:-6px; transform:rotate(-12deg)}
-.corner.right{top:18px; right:-6px; transform:scaleX(-1) rotate(-12deg)}
+
+/* Ramos de azevinho (holly) nas laterais — discretos */
+.holly{
+  position:fixed; top:30px; width:86px; height:46px; z-index:80; pointer-events:none;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.35));
+}
+.holly svg{width:100%; height:100%}
+.holly.left{left:10px; transform:rotate(-6deg)}
+.holly.right{right:10px; transform:scaleX(-1) rotate(-6deg)}
+
+/* “Snow cap” no topo do hero */
+.hero::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:28px; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(24px 12px at 20px 18px, #fff 60%, transparent 62%) repeat-x,
+    radial-gradient(28px 16px at 50px 16px, #fff 60%, transparent 62%) repeat-x;
+  background-size:90px 28px, 110px 28px;
+  background-position:0 0, 0 0;
+  opacity:.92;
+}
 
 /* Canvas de neve ocupa tela toda atrás do conteúdo */
 #snowCanvas{
   position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.9;
 }
 
-/* Movimento reduzido = sem neve/luzes animadas */
+/* Movimento reduzido = sem neve/anim. */
 @media (prefers-reduced-motion:reduce){
-  .lights{animation:none}
+  .lights,.candy{animation:none}
   #snowCanvas{display:none}
 }
 </style>
@@ -275,26 +295,27 @@ details p{margin:.6rem 0 0; color:#333}
 
 <!-- Decorações -->
 <div class="lights" aria-hidden="true"></div>
+<div class="candy" aria-hidden="true"></div>
+<div class="holly left" aria-hidden="true">
+  <!-- Holly SVG (folhas + frutos) -->
+  <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 32c10-6 20-10 30-8-4 4-6 8-6 12 8-6 16-8 24-6-4 4-6 8-6 12 8-6 18-8 26-6-8 6-18 10-28 12-10 2-26-2-40-16z" fill="#0a5d32"/>
+    <path d="M16 30c9-5 18-8 26-6-3 3-5 6-5 9 7-5 14-7 21-5-3 3-5 6-5 9 7-5 15-7 22-5-7 5-16 8-24 10-9 2-23-2-35-12z" fill="#17c964"/>
+    <circle cx="30" cy="28" r="4.5" fill="#ff2d2d"/>
+    <circle cx="38" cy="34" r="4.5" fill="#ff2d2d"/>
+    <circle cx="46" cy="28" r="4.5" fill="#ff2d2d"/>
+  </svg>
+</div>
+<div class="holly right" aria-hidden="true">
+  <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 32c10-6 20-10 30-8-4 4-6 8-6 12 8-6 16-8 24-6-4 4-6 8-6 12 8-6 18-8 26-6-8 6-18 10-28 12-10 2-26-2-40-16z" fill="#0a5d32"/>
+    <path d="M16 30c9-5 18-8 26-6-3 3-5 6-5 9 7-5 14-7 21-5-3 3-5 6-5 9 7-5 15-7 22-5-7 5-16 8-24 10-9 2-23-2-35-12z" fill="#17c964"/>
+    <circle cx="30" cy="28" r="4.5" fill="#ff2d2d"/>
+    <circle cx="38" cy="34" r="4.5" fill="#ff2d2d"/>
+    <circle cx="46" cy="28" r="4.5" fill="#ff2d2d"/>
+  </svg>
+</div>
 <canvas id="snowCanvas" aria-hidden="true"></canvas>
-<div class="corner left" aria-hidden="true">
-  <!-- guirlanda SVG -->
-  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-    <defs><radialGradient id="g" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#17c964"/><stop offset="1" stop-color="#0a5d32"/></radialGradient></defs>
-    <circle cx="60" cy="60" r="46" fill="url(#g)" />
-    <circle cx="40" cy="28" r="6" fill="#ffd95f"/><circle cx="80" cy="32" r="6" fill="#ff5252"/>
-    <circle cx="95" cy="62" r="6" fill="#18a0fb"/><circle cx="30" cy="84" r="6" fill="#ffd95f"/>
-    <circle cx="70" cy="92" r="6" fill="#ff5252"/><circle cx="26" cy="54" r="6" fill="#18a0fb"/>
-  </svg>
-</div>
-<div class="corner right" aria-hidden="true">
-  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-    <defs><radialGradient id="g2" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#17c964"/><stop offset="1" stop-color="#0a5d32"/></radialGradient></defs>
-    <circle cx="60" cy="60" r="46" fill="url(#g2)" />
-    <circle cx="40" cy="28" r="6" fill="#ffd95f"/><circle cx="80" cy="32" r="6" fill="#ff5252"/>
-    <circle cx="95" cy="62" r="6" fill="#18a0fb"/><circle cx="30" cy="84" r="6" fill="#ffd95f"/>
-    <circle cx="70" cy="92" r="6" fill="#ff5252"/><circle cx="26" cy="54" r="6" fill="#18a0fb"/>
-  </svg>
-</div>
 
 <!-- Header -->
 <header class="header" role="banner">
@@ -325,7 +346,6 @@ details p{margin:.6rem 0 0; color:#333}
 
         <div class="cta-row">
           <a href="#checkout" class="btn btn-contrast btn-lg is-pulse" id="heroCta">Quero lucrar agora</a>
-          <!-- removido o 'ver como funciona' para foco total no CTA -->
           <div class="note"><span class="dot"></span> Acesso vitalício + garantia de 7 dias</div>
         </div>
       </div>
@@ -405,7 +425,7 @@ details p{margin:.6rem 0 0; color:#333}
     </div>
   </section>
 
-  <!-- Provas (refeito) -->
+  <!-- Provas -->
   <section class="section section--light proof" id="provas">
     <div class="container">
       <h2>Resultados reais de quem usa o Panetoon</h2>
@@ -568,13 +588,7 @@ details p{margin:.6rem 0 0; color:#333}
   const MAX = Math.min(140, Math.floor(W * H / 28000));
 
   function makeFlake(){
-    return {
-      x: Math.random()*W,
-      y: -10 - Math.random()*H,
-      r: 1.2 + Math.random()*2.6,
-      s: 0.6 + Math.random()*1.4,
-      a: Math.random()*Math.PI*2
-    };
+    return { x: Math.random()*W, y: -10 - Math.random()*H, r: 1.2 + Math.random()*2.6, s: 0.6 + Math.random()*1.4, a: Math.random()*Math.PI*2 };
   }
   for(let i=0;i<MAX;i++) flakes.push(makeFlake());
 
@@ -585,17 +599,12 @@ details p{margin:.6rem 0 0; color:#333}
       f.y += f.s;
       f.x += Math.sin(f.a += 0.01)*0.6;
       if (f.y > H+10) { f.x = Math.random()*W; f.y = -10; }
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI*2); ctx.fill();
     }
     requestAnimationFrame(draw);
   }
   draw();
-  addEventListener('resize', ()=>{
-    W = c.width = window.innerWidth;
-    H = c.height = window.innerHeight;
-  }, {passive:true});
+  addEventListener('resize', ()=>{ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }, {passive:true});
 })();
 </script>
 
