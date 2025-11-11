@@ -227,7 +227,6 @@ details p{margin:.6rem 0 0; color:#333}
 
         <div class="cta-row">
           <a href="#checkout" class="btn btn-contrast btn-lg" id="heroCta">Quero lucrar agora</a>
-          <a href="#como" class="btn btn-ghost">Ver como funciona</a>
           <div class="note"><span class="dot"></span> Acesso vitalício + garantia de 7 dias</div>
         </div>
       </div>
@@ -442,6 +441,79 @@ details p{margin:.6rem 0 0; color:#333}
   }else{
     showSticky(true);
   }
+})();
+</script>
+
+<!-- EFEITO DE NEVE E DECORAÇÃO DE NATAL -->
+<style>
+/* ❄️ Flocos de neve animados */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: #fff;
+  font-size: 1em;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall linear forwards;
+  opacity: 0.9;
+  text-shadow: 0 0 6px rgba(255,255,255,0.6);
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* 🎄 Luzes de Natal no topo */
+.xmas-lights {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+  z-index: 9998;
+  padding: 4px 0;
+}
+.xmas-lights span {
+  width: 10px;
+  height: 20px;
+  border-radius: 50%;
+  background: red;
+  animation: blink 1.4s infinite alternate;
+  box-shadow: 0 0 12px currentColor;
+}
+.xmas-lights span:nth-child(2n){background: gold;}
+.xmas-lights span:nth-child(3n){background: green;}
+.xmas-lights span:nth-child(4n){background: #00b3ff;}
+@keyframes blink {
+  0%, 80% { opacity: .3; filter: brightness(0.6); }
+  100% { opacity: 1; filter: brightness(1.6); }
+}
+</style>
+
+<div class="xmas-lights" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<script>
+/* ❄️ Gerador de flocos de neve */
+(function snowEffect(){
+  const snowContainer = document.createElement("div");
+  document.body.appendChild(snowContainer);
+  const createSnow = () => {
+    const snowflake = document.createElement("div");
+    snowflake.classList.add("snowflake");
+    snowflake.innerHTML = "❄";
+    snowflake.style.left = Math.random() * 100 + "vw";
+    snowflake.style.fontSize = Math.random() * 18 + 8 + "px";
+    snowflake.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    snowContainer.appendChild(snowflake);
+    setTimeout(() => snowflake.remove(), 6000);
+  };
+  setInterval(createSnow, 150);
 })();
 </script>
 
