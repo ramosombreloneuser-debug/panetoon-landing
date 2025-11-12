@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<link rel="icon" type="image/png" href="./panetoonicon.png" />
+<link rel="icon" type="image/png" href="/panetoonicon.png" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Panetoon — Receitas lucrativas de panetone</title>
 <meta name="description" content="Aprenda a produzir e vender panetones premium e lucre neste Natal. Método Panetoon por apenas R$ 29,90." />
@@ -139,7 +139,7 @@ img{max-width:100%; height:auto; display:block}
 @media (min-width:980px){
   .hero__video{aspect-ratio:4/5; min-height:520px}
 }
-.hero__img img{display:none;} /* mantém o markup antigo, mas oculta a imagem porque o vídeo assume o espaço */
+.hero__img img{display:none;}
 
 .cta-row{display:grid; gap:12px; max-width:520px; margin-top:14px}
 .note{display:flex;align-items:center;gap:.6rem;font-weight:700;color:rgba(255,255,255,.9)}
@@ -181,7 +181,7 @@ h2{font-size:var(--h2); line-height:1.15; margin:0 0 12px}
 .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:16px}
 .gallery img{height:220px; object-fit:cover; border-radius:14px; box-shadow:0 22px 46px rgba(0,0,0,.4)}
 
-/* Social proof (melhorado) */
+/* Social proof */
 .proof h2{margin-bottom:8px}
 .testi-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
 .testi{
@@ -247,10 +247,10 @@ details p{margin:.6rem 0 0; color:#333}
 .hero,.section,.marquee{scroll-margin-top:calc(var(--header-h) + 16px)}
 
 /* ======= Decoração de Natal ======= */
-/* Removi touch-action:none (podia travar a rolagem em alguns iPhones) */
+/* Sem touch-action:none pra não travar rolagem */
 .lights,.candy,.holly,#snowCanvas{pointer-events:none}
 
-/* Luzinhas fixas no topo */
+/* Luzinhas fixas */
 .lights{
   position:fixed; top:0; left:0; right:0; height:26px; z-index:80;
   background:
@@ -269,7 +269,7 @@ details p{margin:.6rem 0 0; color:#333}
 }
 @keyframes twinkle{0%{opacity:.5}100%{opacity:.95}}
 
-/* Faixa de bengala */
+/* Faixa */
 .candy{
   position:fixed; top:26px; left:0; right:0; height:8px; z-index:79;
   background:repeating-linear-gradient(45deg,#ffffff 0 10px,#b10012 10px 20px);
@@ -277,7 +277,7 @@ details p{margin:.6rem 0 0; color:#333}
   opacity:.9;
 }
 
-/* Ramos de azevinho */
+/* Ramos */
 .holly{
   position:fixed; top:30px; width:86px; height:46px; z-index:80;
   filter:drop-shadow(0 8px 16px rgba(0,0,0,.35));
@@ -286,7 +286,7 @@ details p{margin:.6rem 0 0; color:#333}
 .holly.left{left:10px; transform:rotate(-6deg)}
 .holly.right{right:10px; transform:scaleX(-1) rotate(-6deg)}
 
-/* “Snow cap” no topo do hero */
+/* Snow cap */
 .hero::before{
   content:""; position:absolute; left:0; right:0; top:0; height:28px; z-index:1;
   background:
@@ -297,10 +297,9 @@ details p{margin:.6rem 0 0; color:#333}
   opacity:.92; pointer-events:none;
 }
 
-/* Canvas de neve ocupa a tela toda (atrás do conteúdo) */
+/* Neve */
 #snowCanvas{ position:fixed; inset:0; z-index:50; opacity:.9; }
 
-/* Movimento reduzido */
 @media (prefers-reduced-motion:reduce){
   .lights,.candy{animation:none}
   #snowCanvas{display:none}
@@ -397,7 +396,7 @@ details p{margin:.6rem 0 0; color:#333}
   <section class="section section--light" id="como">
     <div class="container grid steps">
       <div class="steps__img">
-        <img src="./chocotone.jpg"
+        <img src="/chocotone.jpg"
              alt="Chef preparando panetones com clima de Natal" loading="lazy" decoding="async">
       </div>
       <div>
@@ -442,9 +441,9 @@ details p{margin:.6rem 0 0; color:#333}
       </div>
 
       <div class="gallery" aria-hidden="true">
-        <img src="./choco-1.jpg" alt="">
-        <img src="./choco-2.jpg" alt="">
-        <img src="./chocotone.jpg" alt="">
+        <img src="/choco-1.jpg" alt="">
+        <img src="/choco-2.jpg" alt="">
+        <img src="/chocotone.jpg" alt="">
       </div>
     </div>
   </section>
@@ -460,6 +459,7 @@ details p{margin:.6rem 0 0; color:#333}
       </div>
 
       <div class="testi-grid">
+        <!-- depoimentos (iguais aos seus) -->
         <article class="testi">
           <header class="t-head">
             <div class="avatar"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=60&auto=format&fit=crop&w=120" alt="Carla Fernandes" width="56" height="56"></div>
@@ -599,7 +599,7 @@ details p{margin:.6rem 0 0; color:#333}
 })();
 </script>
 
-<!-- ❄️ Neve performática (canvas) -->
+<!-- Neve -->
 <script>
 (() => {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -632,7 +632,6 @@ details p{margin:.6rem 0 0; color:#333}
 })();
 </script>
 
-<!-- Garantia extra: se algum script externo setar overflow:hidden, reativa a rolagem -->
 <script>
   document.documentElement.style.overflowY = 'auto';
   document.body.style.overflowY = 'auto';
