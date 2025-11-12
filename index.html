@@ -36,9 +36,19 @@
 
 /* Reset/segurança */
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth; overflow-x:hidden; height:auto; min-height:100%}
+html{
+  scroll-behavior:smooth;
+  overflow-x:hidden;           /* sem scroll horizontal */
+  overflow-y:auto !important;  /* GARANTE rolagem */
+  height:auto; min-height:100%;
+  touch-action:pan-y;          /* habilita gesto vertical */
+}
 body{
-  margin:0; overflow-x:hidden; overflow-y:auto; overscroll-behavior-y:none;
+  margin:0;
+  overflow-x:hidden;
+  overflow-y:auto !important;        /* GARANTE rolagem */
+  -webkit-overflow-scrolling:touch;  /* suaviza no iOS */
+  touch-action:pan-y;
   font:500 var(--p)/1.55 "Montserrat",system-ui,Segoe UI,Roboto,Arial,sans-serif;
   color:var(--white);
   background:
@@ -100,7 +110,7 @@ img{max-width:100%; height:auto; display:block}
 .header{
   position:sticky; top:0; z-index:70; height:var(--header-h);
   display:flex; align-items:center; background:rgba(0,0,0,.28); backdrop-filter:saturate(150%) blur(8px);
-  border-bottom:1px solid rgba(255,217,95,.18); overflow:hidden;
+  border-bottom:1px solid rgba(255,217,95,.18);
   box-shadow:0 6px 22px rgba(0,0,0,.22);
 }
 .header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px; min-width:0}
@@ -230,9 +240,11 @@ details p{margin:.6rem 0 0; color:#333}
 .hero,.section,.marquee{scroll-margin-top:calc(var(--header-h) + 16px)}
 
 /* ======= Decoração de Natal ======= */
+.lights,.candy,.holly,#snowCanvas{pointer-events:none; touch-action:none} /* NÃO bloqueiam input */
+
 /* Luzinhas fixas no topo */
 .lights{
-  position:fixed; top:0; left:0; right:0; height:26px; z-index:80; pointer-events:none;
+  position:fixed; top:0; left:0; right:0; height:26px; z-index:80;
   background:
     radial-gradient(6px 12px at 5% 60%, #ff5252 65%, transparent 70%),
     radial-gradient(6px 12px at 15% 60%, #ffd95f 65%, transparent 70%),
@@ -249,18 +261,17 @@ details p{margin:.6rem 0 0; color:#333}
 }
 @keyframes twinkle{0%{opacity:.5}100%{opacity:.95}}
 
-/* Faixa de bengala natalina (fina, sem poluir) */
+/* Faixa de bengala */
 .candy{
-  position:fixed; top:26px; left:0; right:0; height:8px; z-index:79; pointer-events:none;
-  background:
-    repeating-linear-gradient(45deg,#ffffff 0 10px,#b10012 10px 20px);
+  position:fixed; top:26px; left:0; right:0; height:8px; z-index:79;
+  background:repeating-linear-gradient(45deg,#ffffff 0 10px,#b10012 10px 20px);
   box-shadow:0 2px 6px rgba(0,0,0,.25);
   opacity:.9;
 }
 
-/* Ramos de azevinho (holly) nas laterais — discretos */
+/* Ramos de azevinho */
 .holly{
-  position:fixed; top:30px; width:86px; height:46px; z-index:80; pointer-events:none;
+  position:fixed; top:30px; width:86px; height:46px; z-index:80;
   filter:drop-shadow(0 8px 16px rgba(0,0,0,.35));
 }
 .holly svg{width:100%; height:100%}
@@ -269,21 +280,19 @@ details p{margin:.6rem 0 0; color:#333}
 
 /* “Snow cap” no topo do hero */
 .hero::before{
-  content:""; position:absolute; left:0; right:0; top:0; height:28px; z-index:1; pointer-events:none;
+  content:""; position:absolute; left:0; right:0; top:0; height:28px; z-index:1;
   background:
     radial-gradient(24px 12px at 20px 18px, #fff 60%, transparent 62%) repeat-x,
     radial-gradient(28px 16px at 50px 16px, #fff 60%, transparent 62%) repeat-x;
   background-size:90px 28px, 110px 28px;
   background-position:0 0, 0 0;
-  opacity:.92;
+  opacity:.92; pointer-events:none;
 }
 
-/* Canvas de neve ocupa tela toda atrás do conteúdo */
-#snowCanvas{
-  position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.9;
-}
+/* Canvas de neve ocupa a tela toda (atrás do conteúdo) */
+#snowCanvas{ position:fixed; inset:0; z-index:50; opacity:.9; }
 
-/* Movimento reduzido = sem neve/anim. */
+/* Movimento reduzido */
 @media (prefers-reduced-motion:reduce){
   .lights,.candy{animation:none}
   #snowCanvas{display:none}
@@ -293,11 +302,10 @@ details p{margin:.6rem 0 0; color:#333}
 <body>
 <a class="visually-hidden" href="#conteudo">Pular para o conteúdo</a>
 
-<!-- Decorações -->
+<!-- Decorações (todas sem pointer events) -->
 <div class="lights" aria-hidden="true"></div>
 <div class="candy" aria-hidden="true"></div>
 <div class="holly left" aria-hidden="true">
-  <!-- Holly SVG (folhas + frutos) -->
   <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
     <path d="M12 32c10-6 20-10 30-8-4 4-6 8-6 12 8-6 16-8 24-6-4 4-6 8-6 12 8-6 18-8 26-6-8 6-18 10-28 12-10 2-26-2-40-16z" fill="#0a5d32"/>
     <path d="M16 30c9-5 18-8 26-6-3 3-5 6-5 9 7-5 14-7 21-5-3 3-5 6-5 9 7-5 15-7 22-5-7 5-16 8-24 10-9 2-23-2-35-12z" fill="#17c964"/>
@@ -606,6 +614,12 @@ details p{margin:.6rem 0 0; color:#333}
   draw();
   addEventListener('resize', ()=>{ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }, {passive:true});
 })();
+</script>
+
+<!-- Garantia extra: se algum script externo setar overflow:hidden, reativa a rolagem -->
+<script>
+  document.documentElement.style.overflowY = 'auto';
+  document.body.style.overflowY = 'auto';
 </script>
 
 </body>
