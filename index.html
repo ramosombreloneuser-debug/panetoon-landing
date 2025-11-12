@@ -132,12 +132,18 @@ img{max-width:100%; height:auto; display:block}
   content:""; position:absolute; inset:0; pointer-events:none;
   background:radial-gradient(60% 40% at 50% 10%, rgba(255,217,95,.12), transparent 60%);
 }
-.hero__img img{aspect-ratio:4/3; object-fit:cover}
+/* ===== vídeo do hero ===== */
+.hero__video{position:relative; width:100%; aspect-ratio:4/3; background:#000}
+.hero__video iframe{position:absolute; inset:0; width:100%; height:100%; border:0; display:block}
+@media (min-width:980px){
+  .hero__video{aspect-ratio:4/5; min-height:520px}
+}
+.hero__img img{display:none;} /* mantém o markup antigo, mas oculta a imagem porque o vídeo assume o espaço */
+
 .cta-row{display:grid; gap:12px; max-width:520px; margin-top:14px}
 .note{display:flex;align-items:center;gap:.6rem;font-weight:700;color:rgba(255,255,255,.9)}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(255,217,95,.22)}
-@media (min-width:980px){ .hero__grid{grid-template-columns:1.05fr .95fr; align-items:center}
-  .hero__img img{aspect-ratio:4/5; min-height:520px}}
+@media (min-width:980px){ .hero__grid{grid-template-columns:1.05fr .95fr; align-items:center} }
 
 /* Marquee */
 .marquee{border-block:1px solid rgba(255,217,95,.25); background:linear-gradient(90deg,#64060a,#410407); overflow:hidden}
@@ -357,10 +363,19 @@ details p{margin:.6rem 0 0; color:#333}
           <div class="note"><span class="dot"></span> Acesso vitalício + garantia de 7 dias</div>
         </div>
       </div>
-      <div class="hero__img" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1603894465291-22184b3adb85?q=80&auto=format&fit=crop&w=1200"
-             alt="Panetone artesanal decorado em cenário natalino" loading="eager" decoding="async">
+
+      <!-- ===== vídeo entra aqui no lugar da imagem ===== -->
+      <div class="hero__img" aria-hidden="false">
+        <div class="hero__video" role="region" aria-label="Apresentação Panetoon">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/V4krdW2M57k?rel=0&modestbranding=1&playsinline=1"
+            title="Apresentação Panetoon"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
+      <!-- ============================================== -->
     </div>
   </section>
 
