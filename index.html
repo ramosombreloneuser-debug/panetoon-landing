@@ -39,16 +39,16 @@
 *,*::before,*::after{box-sizing:border-box}
 html{
   scroll-behavior:smooth;
-  overflow-x:hidden;           /* sem scroll horizontal */
-  overflow-y:auto !important;  /* GARANTE rolagem */
+  overflow-x:hidden;
+  overflow-y:auto !important;
   height:auto; min-height:100%;
-  touch-action:pan-y;          /* habilita gesto vertical */
+  touch-action:pan-y;
 }
 body{
   margin:0;
   overflow-x:hidden;
-  overflow-y:auto !important;        /* GARANTE rolagem */
-  -webkit-overflow-scrolling:touch;  /* suaviza no iOS */
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
   touch-action:pan-y;
   font:500 var(--p)/1.55 "Montserrat",system-ui,Segoe UI,Roboto,Arial,sans-serif;
   color:var(--white);
@@ -247,7 +247,8 @@ details p{margin:.6rem 0 0; color:#333}
 .hero,.section,.marquee{scroll-margin-top:calc(var(--header-h) + 16px)}
 
 /* ======= Decoração de Natal ======= */
-.lights,.candy,.holly,#snowCanvas{pointer-events:none; touch-action:none} /* NÃO bloqueiam input */
+/* Removi touch-action:none (podia travar a rolagem em alguns iPhones) */
+.lights,.candy,.holly,#snowCanvas{pointer-events:none}
 
 /* Luzinhas fixas no topo */
 .lights{
@@ -309,7 +310,7 @@ details p{margin:.6rem 0 0; color:#333}
 <body>
 <a class="visually-hidden" href="#conteudo">Pular para o conteúdo</a>
 
-<!-- Decorações (todas sem pointer events) -->
+<!-- Decorações -->
 <div class="lights" aria-hidden="true"></div>
 <div class="candy" aria-hidden="true"></div>
 <div class="holly left" aria-hidden="true">
@@ -365,7 +366,7 @@ details p{margin:.6rem 0 0; color:#333}
         </div>
       </div>
 
-      <!-- ===== vídeo entra aqui no lugar da imagem ===== -->
+      <!-- Vídeo -->
       <div class="hero__img" aria-hidden="false">
         <div class="hero__video" role="region" aria-label="Apresentação Panetoon">
           <iframe
@@ -376,7 +377,6 @@ details p{margin:.6rem 0 0; color:#333}
           ></iframe>
         </div>
       </div>
-      <!-- ============================================== -->
     </div>
   </section>
 
@@ -444,7 +444,7 @@ details p{margin:.6rem 0 0; color:#333}
       <div class="gallery" aria-hidden="true">
         <img src="./choco-1.jpg" alt="">
         <img src="./choco-2.jpg" alt="">
-        <img src="./paneton-lucrativo.jpg" alt="">
+        <img src="./chocotone.jpg" alt="">
       </div>
     </div>
   </section>
