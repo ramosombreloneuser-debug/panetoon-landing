@@ -4,6 +4,35 @@
 <meta charset="utf-8" />
 <link rel="icon" type="image/png" href="./psemfundo.png" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s){
+    if(f.fbq)return;
+    n=f.fbq=function(){
+      n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments)
+    };
+    if(!f._fbq)f._fbq=n;
+    n.push=n;
+    n.loaded=!0;
+    n.version='2.0';
+    n.queue=[];
+    t=b.createElement(e);
+    t.async=!0;
+    t.src=v;
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)
+  }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+  fbq('init', '1171759888434033');   // teu Pixel ID
+  fbq('track', 'PageView');          // evento de visualização de página
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=1171759888434033&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
 <title>Panetoon — Receitas lucrativas de panetone</title>
 <meta name="description" content="Aprenda a produzir e vender panetones premium e lucre neste Natal. Método Panetoon por apenas R$ 29,90." />
 <meta name="theme-color" content="#b10012" />
@@ -459,7 +488,7 @@ details p{margin:.6rem 0 0; color:#333}
       </div>
 
       <div class="testi-grid">
-        <!-- depoimentos (iguais aos seus) -->
+        <!-- depoimentos -->
         <article class="testi">
           <header class="t-head">
             <div class="avatar"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=60&auto=format&fit=crop&w=120" alt="Carla Fernandes" width="56" height="56"></div>
